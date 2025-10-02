@@ -108,6 +108,57 @@ The idea here is to check if the design works functionally before worrying about
 
 ---
 
+
+### Why These Modules?  
+
+- **vsdbabysoc.v** → the **top-level SoC wrapper**, connecting CPU (RVMYTH), DAC, and PLL.  
+- **rvmyth_avsddac_stripped.v** → the **RVMYTH CPU core**, adapted to work with the DAC.  
+- **avsddac.v** → the **10-bit DAC**, converting digital CPU outputs into analog-equivalent values.  
+- **avsdpll.v** → the **PLL model**, providing a stable multiplied system clock.  
+- **testbench.v** → supplies clock/reset stimulus, includes `$dumpfile`/`$dumpvars`, and instantiates the SoC.  
+
+All together, these files represent the **functional BabySoC**. Without any one of them, the system would be incomplete (no CPU execution, no output, no realistic clock, or nothing to observe).  
+
+---
+
+### What the Waveform Proves  
+
+In GTKWave I focused on the following signals:  
+
+- **clk, pll_locked, reset**  
+  - `clk` drives the simulation.  
+  - `pll_locked` asserts once the PLL stabilizes, showing proper clocking.  
+  - `reset` ensures the CPU starts cleanly.  
+
+- **pc, instr**  
+  - `pc` increments as instructions execute.  
+  - `instr` shows the fetched instruction at each cycle.  
+  - Together, these confirm the CPU is running and not stuck.  
+
+- **addr, we, wdata, valid, ready**  
+  - These are the memory bus signals.  
+  - Handshake (`valid/ready`) shows proper CPU ↔ peripheral communication.  
+  - `addr`, `we`, `wdata` indicate where and what data is written.  
+
+- **RV_TO_DAC_bits, OUT**  
+  - `RV_TO_DAC_bits` is the CPU’s digital output to the DAC.  
+  - `OUT` is the DAC’s analog-equivalent response.  
+  - When both toggle in sync, it proves CPU → DAC integration works.  
+
+---
+
+### Overall Outcome  
+
+The simulation demonstrates that:  
+- The **CPU executes instructions** (PC + instr).  
+- The **PLL locks properly** (realistic clocking).  
+- The **bus handshake works** (valid/ready protocol).  
+- The **DAC responds to CPU outputs** (digital → analog interface).  
+
+This proves that the **BabySoC system is functionally integrated and behaving correctly before synthesis**.  
+
+---
+
 ## Simulation Log
 See the full [sim.log](./sim.log) for the simulation messages.
 
