@@ -59,9 +59,14 @@ The idea here is to check if the design works functionally before worrying about
 
 ## Simulation Flow (What I Did)
 
-1. Installed/used `iverilog`, `vvp`, `gtkwave`.  
-2. Compiled top-level modules (`vsdbabysoc.v`, `rvmyth`, `avsddac`, `avsdpll`, `testbench.v`).  
-3. Made sure `$dumpfile` and `$dumpvars` were in the testbench:  
+1. Installed and used `iverilog`, `vvp`, `gtkwave`.  
+2. Compiled top-level modules
+    - `vsdbabysoc.v`
+    -  `rvmyth`
+    -   `avsddac`
+    -    `avsdpll`
+    -     `testbench.v`  
+3. Added `$dumpfile` and `$dumpvars` in the testbench:  
 
    ```verilog
    initial begin
@@ -83,12 +88,9 @@ The idea here is to check if the design works functionally before worrying about
    vvp build/pre_synth_sim.out | tee build/sim_log.txt
    ```
 
-5. Opened the VCD in GTKWave and looked at:
+5. Opened the VCD in GTKWave:
 
-   * `clk`, `pll_locked`, `reset`
-   * `pc`, `instr`
-   * `addr`, `we`, `wdata`, `valid`, `ready`
-   * `RV_TO_DAC_bits`, `OUT`
+    ```gtkwave pre_synth_sim.vcd &```
 
 ---
 
@@ -141,25 +143,22 @@ All together, these files represent the **functional BabySoC**. Without any one 
 
 In GTKWave I focused on the following signals:  
 
-- **clk, pll_locked, reset**  
-  - `clk` drives the simulation.  
-  - `pll_locked` asserts once the PLL stabilizes, showing proper clocking.  
-  - `reset` ensures the CPU starts cleanly.  
-
-- **pc, instr**  
-  - `pc` increments as instructions execute.  
-  - `instr` shows the fetched instruction at each cycle.  
-  - Together, these confirm the CPU is running and not stuck.  
-
-- **addr, we, wdata, valid, ready**  
-  - These are the memory bus signals.  
-  - Handshake (`valid/ready`) shows proper CPU ↔ peripheral communication.  
-  - `addr`, `we`, `wdata` indicate where and what data is written.  
+- **clk, reset**  
+  - `clk` drives the entire SoC and toggles at a stable frequency.  
+  - `reset` is asserted at the beginning and then released, ensuring the CPU starts cleanly.  
 
 - **RV_TO_DAC_bits, OUT**  
-  - `RV_TO_DAC_bits` is the CPU’s digital output to the DAC.  
+  - `RV_TO_DAC_bits` are the 10-bit digital values written by the CPU to the DAC.  
   - `OUT` is the DAC’s analog-equivalent response.  
-  - When both toggle in sync, it proves CPU → DAC integration works.  
+  - The way `OUT` follows the digital codes confirms correct CPU → DAC communication and functional dataflow.  
+
+---
+
+### Other Signals That Can Be Observed (Not Captured Here)  
+For a deeper check, BabySoC simulations can also include:  
+- **pll_locked** → confirms PLL has stabilized.  
+- **pc, instr** → show CPU instruction execution.  
+- **addr, we, wdata, valid, ready** → prove correct bus handshakes between CPU and peripherals.  
 
 ---
 
