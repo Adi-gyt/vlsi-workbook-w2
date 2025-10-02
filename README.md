@@ -8,6 +8,20 @@ The main focus was to perform **pre-synthesis functional simulations** and under
 
 ---
 
+## Repo Structure  
+
+vlsi-workbook-w2/
+├── src/ # Verilog source files (BabySoC, RVMYTH, etc.)
+├── screenshots/ # GTKWave screenshots and supporting images
+├── sim.log # Functional simulation log
+├── pre_synth_sim.vcd # Waveform dump from simulation
+└── README.md # Documentation (this file)
+
+yaml
+Copy code
+
+---
+
 ## What I produced this week
 - Notes on the underlying SoC theory (this write-up).  
 - Functional simulation logs + `.vcd` waveforms.  
