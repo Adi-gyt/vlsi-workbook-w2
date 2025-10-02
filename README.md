@@ -92,18 +92,38 @@ The idea here is to check if the design works functionally before worrying about
 
 ---
 
-## Waveform Screenshots I Collected
+## Waveform Screenshots I Collected and Their Explanations
+
 ### Reset + Clock
 ![Reset + Clock](./screenshots/resetclk.png)
+This waveform shows the basic SoC bring-up:
+- **CLK** is toggling cleanly at a fixed frequency, driving the simulation.
+- **reset** is asserted at the beginning and then de-asserted, allowing the CPU to start execution.
+This verifies that the PLL/clock source is stable and that reset logic initializes the CPU correctly.
+
+---
 
 ### DAC Output
 ![DAC Output](./screenshots/dac.png)
 
-### Overview (All signals together)
-![Overview](./screenshots/week2wave.png)
+This waveform shows the CPU writing values to the DAC:
+- **RV_TO_DAC_bits[9:0]**: Digital data from the CPU, changing over time (`000 → 001 → 002 …`).
+- **OUT**: The DAC’s analog-equivalent output, which follows these digital codes with smooth transitions.
+This proves the CPU → DAC integration is working, as software writes are directly producing analog-equivalent signals.
 
 ---
 
+### Overview (All signals together)
+![Overview](./screenshots/week2wave.png)
+
+This view combines multiple important signals:
+- **clk**: System clock driving all activity.
+- **reset**: Released after startup, enabling normal operation.
+- **RV_TO_DAC_bits** and **OUT**: Show the CPU writing to the DAC and the DAC responding.
+Together these signals confirm that the SoC is functionally modeled:  
+the CPU runs instructions, communicates over the bus, and produces real output at the DAC.
+
+---
 
 ### Why These Modules?  
 
