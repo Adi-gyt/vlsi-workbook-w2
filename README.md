@@ -22,8 +22,6 @@ In real life this makes devices smaller, cheaper, and more efficient. BabySoC is
 
 ---
 
-## Key Blocks in BabySoC
-
 ## BabySoC Block Diagram
 ![BabySoC Block Diagram](./screenshots/babysoc_block.png)
 - **RVMYTH CPU** — executes instructions.  
@@ -43,8 +41,6 @@ In real life this makes devices smaller, cheaper, and more efficient. BabySoC is
 - Shows the link between **software instructions → hardware signals → real output** (like sound).
 
 ---
-
-## Functional Modelling (Before Synthesis)
 
 ## Functional Modelling Flow
 ![Functional Modelling](./screenshots/functional_modelling.png)
