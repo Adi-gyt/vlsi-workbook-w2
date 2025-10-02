@@ -1,14 +1,17 @@
-# Week 2 — BabySoC Fundamentals & Functional Modelling
+# Week 2 — BabySoC Fundamentals & Functional Modelling  
 
-## Overview
+In **Week 0**, I set up my environment and tools. In **Week 1**, I dived into the basics of Verilog, ran my first RISC-V core (RVMYTH) simulations, and got comfortable with Icarus Verilog and GTKWave.  
 
-This week I explored **BabySoC**, a minimal RISC-V based System-on-Chip (SoC) that includes a small CPU (RVMYTH), a PLL, and a 10-bit DAC.  
-The goal was to run **pre-synthesis functional simulations** (using Icarus Verilog + GTKWave) and understand how the SoC behaves when software runs on the CPU.
+Now in **Week 2**, I moved one step further into **System-on-Chip design** by working with **BabySoC** — a minimal RISC-V based SoC that ties together the RVMYTH CPU, a PLL, and a 10-bit DAC.  
 
-**What I produced:**
-- Notes on theory (this write-up).
-- Simulation logs and `.vcd` waveforms.
-- GTKWave screenshots with short explanations.
+The main focus was to perform **pre-synthesis functional simulations** and understand how hardware modules interact when actual software runs on the CPU.  
+
+---
+
+## What I produced this week
+- Notes on the underlying SoC theory (this write-up).  
+- Functional simulation logs + `.vcd` waveforms.  
+- GTKWave screenshots with short explanations.  
 
 ---
 
